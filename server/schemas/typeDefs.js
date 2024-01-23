@@ -4,14 +4,15 @@ type User {
     _id: ID
     username: String
     email: String
+    bookCount: Int
     savedBooks: [Book]
   }
   
   type Book {
     bookId: ID
-    title: String
-    author: String
+    authors: [String]
     description: String
+    title: String
     image: String
     link: String
   }
@@ -30,21 +31,24 @@ type User {
     link: String
   }
   
-  input CreateUserInput {
-    username: String!
-    email: String!
-    password: String!
+  input BookInput {
+    bookId: ID
+    authors: [String]
+    description: String
+    title: String
+    image: String
+    link: String
   }
   
   type Query {
-    getSingleUser(username: String!): User
-  }
+    me: User
+}
   
   type Mutation {
-    createUser(input: CreateUserInput!): Auth
-    login(username: String!, password: String!): Auth
+    login(email: String!, password: String!): Auth
+    addUser(username: String!, email: String!, password: String!): Auth
     saveBook(input: BookInput!): User
-    deleteBook(bookId: ID!): User
+    removeBook(bookId: ID!): User
   }
 `;
   module.exports = typeDefs
